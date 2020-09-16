@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace activity_book.domain
+﻿namespace activity_book.domain
 {
     public class Value
     {

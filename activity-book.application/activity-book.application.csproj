@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="..\activity-book.domain\activity-book.domain.csproj" />
-    <ProjectReference Include="..\activity-book.persistence\activity-book.persistence.csproj" />
+    <ProjectReference Include="..\activity-book.domain\activity-book.domain.csproj"/>
+    <ProjectReference Include="..\activity-book.persistence\activity-book.persistence.csproj"/>
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0"/>
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>activity_book.application</RootNamespace>
   </PropertyGroup>
-
 </Project>

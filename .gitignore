@@ -4,3 +4,4 @@ obj
 course-downloads
 appsettings.json
 *.db
+.vscode
