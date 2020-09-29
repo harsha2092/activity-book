@@ -1,56 +1,51 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Grid } from 'semantic-ui-react';
 import { IActivity } from '../../models/activity';
-import ActivityDetails from './activity-details';
-import { ActivityForm } from './activity-form';
 import ActivityList from './activity-list';
+import {connect} from 'react-redux';
+import {IGlobalState} from '../../store/redux/rootReducer';
+import { getActivities } from '../../store/redux/activity/activity.action';
+import { LoadingComponent } from '../common/loading/loading';
 
-interface IProps {
-    activities: IActivity[];
+interface IStateProps {
+    activities: IActivity[],
     selectedActivity: IActivity | null;
-    handleSelectActivity: (id: string) => void;
-    editMode: boolean;
-    setEditMode: (editMode: boolean) => void;
-    setselectedActivity: (activity: IActivity | null) => void;
-    handleCreateActivity: (activity: IActivity) => void;
-    handleEditActivity: (activity: IActivity) => void;
-    handleDeleteActivity: (event: React.MouseEvent<HTMLButtonElement>,id: string) => void;
-    submitting: boolean;
-    target: string;
+    isLoadingActivities: boolean;
+    getActivities: () => void
 }
 
-const ActivityDashboard: React.FC<IProps> = ({
-    activities, 
-    selectedActivity, 
-    handleSelectActivity,
-    editMode,
-    setEditMode,
-    setselectedActivity,
-    handleCreateActivity,
-    handleEditActivity,
-    handleDeleteActivity,
-    submitting,
-    target
+const ActivityDashboard: React.FC<IStateProps> = ({ 
+    activities,
+    isLoadingActivities,
+    getActivities
 }) => {
-    
-    return (
+
+    useEffect(() => {
+        getActivities();
+  }, [getActivities]);
+
+
+    { return isLoadingActivities ? <LoadingComponent content={"Loading List"}/> 
+    : (
         <Grid>
             <Grid.Column width={10}>
-                <ActivityList target={target} submitting={submitting} activities={activities} handleSelectActivity={handleSelectActivity} handleDeleteActivity={handleDeleteActivity}/>
+                <ActivityList activities={activities}/>
             </Grid.Column>
             <Grid.Column width={6}>
-                {!editMode && selectedActivity && <ActivityDetails setSelectedActivity={setselectedActivity} selectedActivity={selectedActivity!} setEditMode={setEditMode}/>}
-                {editMode && <ActivityForm
-                                key={selectedActivity ? selectedActivity.id : '0'}
-                                initialActivity={selectedActivity} 
-                                setEditMode={setEditMode}
-                                handleCreateActivity={handleCreateActivity}
-                                handleEditActivity={handleEditActivity}
-                                submitting={submitting} />
-                }
+                <h1>Activity filters</h1>
             </Grid.Column>
         </Grid>
-    )
+      )
+    }
 }
 
-export default ActivityDashboard;
+const mapDispatchTopProps = (dispatch: any) => ({
+    getActivities: () => dispatch(getActivities()),
+});
+
+const mapStateToProps = (state: IGlobalState) => ({
+    activities : state.activity.activities,
+    isLoadingActivities: state.activity.isLoadingActivities
+});
+
+export default connect(mapStateToProps, mapDispatchTopProps)(ActivityDashboard);

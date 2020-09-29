@@ -1,17 +1,22 @@
 import React from 'react'
 import { Item, Button, Label, Segment } from 'semantic-ui-react';
 import { IActivity } from '../../models/activity';
-
+import {connect} from 'react-redux';
+import {deleteActivity, selectActivity} from '../../store/redux/activity/activity.action';
+import { IGlobalState } from '../../store/redux/rootReducer';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
     activities: IActivity[];
-    handleSelectActivity: (id: string) => void;
-    handleDeleteActivity: (event:React.MouseEvent<HTMLButtonElement>, id: string) => void;
-    submitting: boolean;
-    target: string;
 }
 
-const ActivityList: React.FC<IProps> = ({activities, handleSelectActivity, handleDeleteActivity, submitting, target}) => {
+interface StateProps {
+    activityIdBeingDeleted: string | null;
+    handleDeleteActivity: (event:React.MouseEvent<HTMLButtonElement>, id: string) => void;
+    isActivityDeleting: boolean,
+}
+
+const ActivityList: React.FC<IProps & StateProps> = ({activities, handleDeleteActivity, activityIdBeingDeleted, isActivityDeleting}) => {
     return (
     <Segment clearing>
         <Item.Group divided>
@@ -25,10 +30,16 @@ const ActivityList: React.FC<IProps> = ({activities, handleSelectActivity, handl
                         <div>{activity.city}, {activity.venue}</div>
                     </Item.Description>
                     <Item.Extra>
-                        <Button floated="right" color="blue" content="view" onClick={() => handleSelectActivity(activity.id)}/>
+                        <Button 
+                            floated="right" 
+                            color="blue" 
+                            content="view" 
+                            as={NavLink}
+                            to={`/activity/${activity.id}`}
+                        />
                         <Button
                             name={activity.id}
-                            loading={activity.id === target ? submitting : false}
+                            loading={activity.id === activityIdBeingDeleted ? isActivityDeleting : false}
                             floated="right"
                             color="red"
                             content="delete"
@@ -43,4 +54,13 @@ const ActivityList: React.FC<IProps> = ({activities, handleSelectActivity, handl
     )
 }
 
-export default ActivityList;
+const mapDispatchToProps = (dispatch: any) => ({
+    handleDeleteActivity: (event: React.MouseEvent<HTMLButtonElement>, id: string) => dispatch(deleteActivity(event, id)),
+})
+
+const mapStateToProps = (state: IGlobalState) => ({
+    activityIdBeingDeleted: state.activity.activityBeingDeleted, 
+    isActivityDeleting: state.activity.isDeletingActivity,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityList);
