@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react'
-import { Button, Form, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Segment } from 'semantic-ui-react'
 import { IActivity } from '../../models/activity'
 import {v4 as uuid} from 'uuid';
 import { connect } from 'react-redux';
@@ -84,23 +84,25 @@ const ActivityForm: React.FC<StateProps & RouteComponentProps<RouteProps>> = ({
     }
     { return isLoadingActivity ? <LoadingComponent content="Loading..."/> 
     : (
-        <div>
-            <Segment clearing>
-                <Form 
-                    onSubmit={handleSubmit}
-                    key={initialActivity ? initialActivity.id : '0'}
-                >
-                    <Form.Input placeholder="Title" value={activity.title} name="title" onChange={handleOnChange}/>
-                    <Form.TextArea rows ={2} placeholder="Description" value={activity.description} name="description" onChange={handleOnChange}/>
-                    <Form.Input placeholder="Category" value={activity.category} name="category" onChange={handleOnChange}/>
-                    <Form.Input type="datetime-local" placeholder="Date" value={activity.date} name="date" onChange={handleOnChange}/>
-                    <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleOnChange}/>
-                    <Form.Input placeholder="venue" value={activity.venue} name="venue" onChange={handleOnChange}/>
-                    <Button loading={submitting} type="submit" content="submit" positive floated="right"/>
-                    <Button onClick = {() => {history.push(`/activity/${initialActivity ? initialActivity.id : ''}`) }} type="button" content="Cancel" floated="right" />
-                </Form>
-            </Segment>
-        </div>
+        <Grid>
+            <Grid.Column width={10}>
+                <Segment clearing>
+                    <Form 
+                        onSubmit={handleSubmit}
+                        key={initialActivity ? initialActivity.id : '0'}
+                    >
+                        <Form.Input placeholder="Title" value={activity.title} name="title" onChange={handleOnChange}/>
+                        <Form.TextArea rows ={2} placeholder="Description" value={activity.description} name="description" onChange={handleOnChange}/>
+                        <Form.Input placeholder="Category" value={activity.category} name="category" onChange={handleOnChange}/>
+                        <Form.Input type="datetime-local" placeholder="Date" value={activity.date} name="date" onChange={handleOnChange}/>
+                        <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleOnChange}/>
+                        <Form.Input placeholder="venue" value={activity.venue} name="venue" onChange={handleOnChange}/>
+                        <Button loading={submitting} type="submit" content="submit" positive floated="right"/>
+                        <Button onClick = {() => {history.push(`/activity/${initialActivity ? initialActivity.id : ''}`) }} type="button" content="Cancel" floated="right" />
+                    </Form>
+                </Segment>
+            </Grid.Column>
+        </Grid>
       )
     }
 }

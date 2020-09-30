@@ -5,19 +5,29 @@ import ActivityDashboard from './components/activities/activity-dashboard';
 import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
 import { HomePage } from './pages/home-page';
 import ActivityForm from './components/activities/activity-form';
-import activityDetails from './components/activities/activity-details';
+import activityDetails from './components/activities/activity-details/activity-details';
 
 const App: React.FC<RouteComponentProps> = ({location}) => {
 
     return (
       <React.Fragment>
-        <Navbar/>
-        <Container style={{marginTop: '7em'}}>
-          <Route path="/" exact component={HomePage}/>
-          <Route path="/activity" exact component={ActivityDashboard}/>
-          <Route path="/activity/:id" component={activityDetails}/>
-          <Route key={location.key} path={["/create", "/manage/:id"]} component={ActivityForm}/>
-        </Container>
+        <Route path="/" exact component={HomePage}/>
+        <Route 
+          path={'/(.+)'} 
+          render={ () => 
+            (
+              <React.Fragment>
+                <Navbar/>
+                <Container style={{marginTop: '7em'}}>
+                  <Route path="/activity" exact component={ActivityDashboard}/>
+                  <Route path="/activity/:id" component={activityDetails}/>
+                  <Route key={location.key} path={["/create", "/manage/:id"]} component={ActivityForm}/>
+                </Container>
+              </React.Fragment>
+            )
+          }
+        />
+        
       </React.Fragment>
     );
 }

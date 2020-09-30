@@ -23,6 +23,10 @@ const Navbar: React.FC<IStateProps> = ({handleCreateActivityOnClick}) => {
                     to="/activity"
                     />
                     <Menu.Item as={NavLink} to="/create">
+                        {/* TODO:  we are getting waring in the console because of this line - need to fix it
+                        The issue is with react and semantic ui and tracked here - 
+                        https://github.com/Semantic-Org/Semantic-UI-React/issues/4020
+                        https://github.com/Semantic-Org/Semantic-UI-React/issues/3819*/}
                         <Button onClick={handleCreateActivityOnClick} positive content="Add Activity"/>
                     </Menu.Item>
                 </Container>

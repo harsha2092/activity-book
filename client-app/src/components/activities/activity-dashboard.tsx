@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { Grid } from 'semantic-ui-react';
 import { IActivity } from '../../models/activity';
-import ActivityList from './activity-list';
+import ActivityList from './activity-list/activity-list';
 import {connect} from 'react-redux';
 import {IGlobalState} from '../../store/redux/rootReducer';
 import { getActivities } from '../../store/redux/activity/activity.action';

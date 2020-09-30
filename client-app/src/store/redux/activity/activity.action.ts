@@ -27,6 +27,16 @@ import agent from '../../../api/agent';
      }
  }
 
+ export const groupSortedActivitiesByDate = (activities: IActivity[]) => {
+    const sortedActivities = activities.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+    return sortedActivities.reduce((accumulator,  currentActivity) => 
+    {
+        const date = currentActivity.date.split('T')[0];
+        accumulator[date] = accumulator[date] ? [...accumulator[date], currentActivity] : [currentActivity];
+        return  accumulator;
+    }, {} as {[key: string] : IActivity[]});
+ }
+
  const getActivitySuccess = (activity: IActivity) => {
     return ({
      type: activityActionTypes.GET_ACTIVITIY_SUCCESS,
