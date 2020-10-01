@@ -40,6 +40,11 @@ const activityReducer = (state = INITIAL_STATE, action: Action) => {
                 activities: action.payload,
                 isLoadingActivities: false
             };
+        case activityActionTypes.GET_ACTIVITIES_FAILURE:
+            return {
+                ...state,
+                isLoadingActivities: false,
+            };
         case activityActionTypes.GET_ACTIVITIY_START:
             return {
                 ...state,
@@ -49,6 +54,11 @@ const activityReducer = (state = INITIAL_STATE, action: Action) => {
             return {
                 ...state,
                 selectedActivity: action.payload,
+                isLoadingActivity: false
+            };
+        case activityActionTypes.GET_ACTIVITIY_FAILURE:
+            return {
+                ...state,
                 isLoadingActivity: false
             };
         case activityActionTypes.SELECT_ACTIVITY:
@@ -68,6 +78,11 @@ const activityReducer = (state = INITIAL_STATE, action: Action) => {
                 selectedActivity: action.payload,
                 isAddOrUpdateActivity: false,
             }
+        case activityActionTypes.EDIT_ACTIVITY_FAILURE:
+            return {
+                ...state,
+                isAddOrUpdateActivity: false,
+            }
         case activityActionTypes.CREATE_ACTIVITY_MENU_BUTTON_CLICK:
             return {
                 ...state,
@@ -83,6 +98,11 @@ const activityReducer = (state = INITIAL_STATE, action: Action) => {
                 ...state,
                 activities: [...state.activities, action.payload],
                 selectedActivity: action.payload,
+                isAddOrUpdateActivity: false,
+            }
+        case activityActionTypes.CREATE_ACTIVITY_FAILURE:
+            return {
+                ...state,
                 isAddOrUpdateActivity: false,
             }
         case activityActionTypes.DELETE_ACTIVITY_START:

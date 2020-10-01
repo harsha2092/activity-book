@@ -1,4 +1,6 @@
+import { format } from 'date-fns';
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { Segment, Item, Header, Button, Image } from 'semantic-ui-react'
 import { IActivity } from '../../../models/activity';
 
@@ -12,7 +14,7 @@ const activityImageTextStyle = {
   left: '5%',
   width: '100%',
   height: 'auto',
-  color: 'white'
+  color: 'white' 
 };
 
 interface Iprops {
@@ -33,7 +35,7 @@ export const ActivityDetailsHeader : React.FC<Iprops> = ({activity}) => {
                         content={activity.title}
                         style={{ color: 'white' }}
                     />
-                    <p>{activity.date}</p>
+                    <p>{format(activity.date, 'eeee do MMMM')}</p>
                     <p>
                         Hosted by <strong>Bob</strong>
                     </p>
@@ -45,7 +47,12 @@ export const ActivityDetailsHeader : React.FC<Iprops> = ({activity}) => {
             <Segment clearing attached='bottom'>
             <Button color='teal'>Join Activity</Button>
             <Button>Cancel attendance</Button>
-            <Button color='orange' floated='right'>
+            <Button 
+                color='orange' 
+                floated='right'
+                as={Link}
+                to={`/manage/${activity.id}`}
+            >
                 Manage Event
             </Button>
             </Segment>

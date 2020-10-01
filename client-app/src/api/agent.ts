@@ -1,9 +1,34 @@
 import axios, { AxiosResponse } from 'axios';
 import { IActivity } from '../models/activity';
+import {history} from '../index';
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
-const responseBody = (response: AxiosResponse) => response.data;
+axios.interceptors.response.use(undefined, (error) => {
+    if(error.message === 'Network Error' && !error.response){
+        toast.error('Network error! server not reachable');
+        return;
+    } 
+
+    const {status, config, data} = error.response;
+    if(status === 404) {
+        history.push('/not-found');
+    }
+    //This case is specifically handled for invalid guid like guid with lesser characters
+    if(status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')){
+        history.push('/not-found');
+    }
+
+    if(status === 500){
+        toast.error("Server error");
+    }
+
+    throw error;
+})
+
+const responseBody = (response: AxiosResponse) => response?.data;
+
 
 const sleep = (ms: number) => (response: AxiosResponse) =>
             new Promise<AxiosResponse>(resolve => setTimeout(() => resolve(response), ms));

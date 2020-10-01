@@ -1,12 +1,10 @@
 import React, { Fragment } from 'react'
-import { Item, Button, Label, Segment } from 'semantic-ui-react';
+import { Label } from 'semantic-ui-react';
 import { IActivity } from '../../../models/activity';
 import {connect} from 'react-redux';
-import {deleteActivity, groupSortedActivitiesByDate, selectActivity} from '../../../store/redux/activity/activity.action';
+import {deleteActivity, groupSortedActivitiesByDate} from '../../../store/redux/activity/activity.action';
 import { IGlobalState } from '../../../store/redux/rootReducer';
-import { NavLink } from 'react-router-dom';
 import { ActivityListItemGroup } from './activity-list-item-group';
-import { LoadingComponent } from '../../common/loading/loading';
 
 interface IProps {
     activities: IActivity[];
@@ -24,7 +22,7 @@ const ActivityList: React.FC<IProps & StateProps> = ({activities, handleDeleteAc
     return (
         <Fragment>
             {
-                groupedActivities ? Object.keys(groupedActivities).map((date: string) => {
+                groupedActivities && Object.keys(groupedActivities).length > 0 ? Object.keys(groupedActivities).map((date: string) => {
                     return (
                         <Fragment key={date}>
                             <Label size="large" color="blue">
@@ -38,7 +36,7 @@ const ActivityList: React.FC<IProps & StateProps> = ({activities, handleDeleteAc
                             />
                         </Fragment>
                         )
-                }) : <LoadingComponent content={"Loading component"} /> 
+                }) :  <h1>Activities not loaded</h1>
             }
         </Fragment>
     )

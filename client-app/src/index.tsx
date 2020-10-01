@@ -6,17 +6,24 @@ import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css'
 import {Provider} from 'react-redux';
 import {store} from './store/redux/store';
-import { BrowserRouter } from 'react-router-dom';
+import {  Router } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 import ScrollToTop from './components/common/scroll/scroll-to-top';
+import 'react-toastify/dist/ReactToastify.css';
+import 'react-widgets/dist/css/react-widgets.css';
+import dateFnsLocalizer from 'react-widgets-date-fns';
+
+new dateFnsLocalizer();
+export const history = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <React.StrictMode>
         <ScrollToTop/>
         <App />
       </React.StrictMode>
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById('root')
   

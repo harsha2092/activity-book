@@ -1,5 +1,5 @@
 import React from 'react'
-import { Item, Segment } from 'semantic-ui-react'
+import { Item } from 'semantic-ui-react'
 import { IActivity } from '../../../models/activity'
 import { ActivityListItem } from './activity-list-item'
 

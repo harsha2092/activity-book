@@ -1,12 +1,13 @@
+import { format } from 'date-fns'
 import React from 'react'
 import { Segment, Grid, Icon } from 'semantic-ui-react'
 import { IActivity } from '../../../models/activity'
 
 interface IProps {
-    acitivity: IActivity;
+  activity: IActivity;
 }
 
-export const ActivityDetailsInfo: React.FC<IProps> = ({acitivity}) => {
+export const ActivityDetailsInfo: React.FC<IProps> = ({activity}) => {
     return (
         <Segment.Group>
               <Segment attached='top'>
@@ -15,7 +16,7 @@ export const ActivityDetailsInfo: React.FC<IProps> = ({acitivity}) => {
                     <Icon size='large' color='teal' name='info' />
                   </Grid.Column>
                   <Grid.Column width={15}>
-                    <p>{acitivity.description}</p>
+                    <p>{activity.description}</p>
                   </Grid.Column>
                 </Grid>
               </Segment>
@@ -26,7 +27,9 @@ export const ActivityDetailsInfo: React.FC<IProps> = ({acitivity}) => {
                   </Grid.Column>
                   <Grid.Column width={15}>
                     <span>
-                      {acitivity.date}
+                      {/* TODO: even though we set the correct time in form , it is shown wrongly in details page due 
+                                to timezone format change in details and form page. need to fix it somehow */}
+                      {format(activity.date, 'eeee do MMMM')} at {format(activity.date, 'h:mm a')}
                     </span>
                   </Grid.Column>
                 </Grid>
@@ -37,7 +40,7 @@ export const ActivityDetailsInfo: React.FC<IProps> = ({acitivity}) => {
                     <Icon name='marker' size='large' color='teal' />
                   </Grid.Column>
                   <Grid.Column width={11}>
-                    <span>{acitivity.venue}, {acitivity.city}</span>
+                    <span>{activity.venue}, {activity.city}</span>
                   </Grid.Column>
                 </Grid>
               </Segment>

@@ -13,25 +13,32 @@ import agent from '../../../api/agent';
     type: activityActionTypes.GET_ACTIVITIES_START,
  });
 
+ const getActivitiesFailure = () => ({
+    type: activityActionTypes.GET_ACTIVITIES_FAILURE,
+ });
+
  export const getActivities = () => {
      return (dispatch: any ) => {
         dispatch(getActivitiesStart());
         agent.Activities.list()
         .then(response => {
             const activities = response.map(activity => {
-                activity.date = activity.date.split('.')[0];
+                activity.date = new Date(activity.date);
                 return activity;
                 });
             dispatch(getActivitiesSuccess(activities));
+        }).catch((error) => {
+            dispatch(getActivitiesFailure());
+            console.log(`error ${error}`);
         });
      }
  }
 
  export const groupSortedActivitiesByDate = (activities: IActivity[]) => {
-    const sortedActivities = activities.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+    const sortedActivities = activities.sort((a, b) => a.date.getTime() - b.date.getTime());
     return sortedActivities.reduce((accumulator,  currentActivity) => 
     {
-        const date = currentActivity.date.split('T')[0];
+        const date = currentActivity.date.toISOString().split('T')[0];
         accumulator[date] = accumulator[date] ? [...accumulator[date], currentActivity] : [currentActivity];
         return  accumulator;
     }, {} as {[key: string] : IActivity[]});
@@ -47,6 +54,10 @@ import agent from '../../../api/agent';
  const getActivityStart = () => ({
     type: activityActionTypes.GET_ACTIVITIY_START,
  });
+ 
+ const getActivityFailure = () => ({
+     type: activityActionTypes.GET_ACTIVITIY_FAILURE,
+ })
 
  export const getActivity = (id: string) => {
      return (dispatch: any ) => {
@@ -55,9 +66,12 @@ import agent from '../../../api/agent';
         .then(response => {
                 console.log(`response for activity details ${JSON.stringify(response)}`);
                 const activity = response;
-                activity.date = activity.date.split('.')[0];
+                activity.date = new Date(activity.date);
             dispatch(getActivitySuccess(activity));
-        });
+        }).catch((error) => {
+            dispatch(getActivityFailure());
+            console.log(`error ${JSON.stringify(error.response)}`);
+        });;
      }
  }
 
@@ -87,6 +101,7 @@ export const editActivity = (activity: IActivity) => {
             dispatch(editActivitySuccess(activity));
         } catch(error) {
             dispatch(editActivityFailure());
+            throw error;
         }
     }
 };
@@ -112,11 +127,10 @@ export const createActivity = (activity: IActivity) => {
    return async (dispatch: any) =>  {
         dispatch(createActivityStart());
         try {
-            await agent.Activities.create(activity);
             dispatch(createActivitySuccess(activity));
         } catch(error) {
             dispatch(createActivityFailure());
-            console.log(`error: ${JSON.stringify(error)}`);
+            throw error;
         }
     }
 };

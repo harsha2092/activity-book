@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
-import { Button, Card, Grid, Image } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { IActivity } from '../../../models/activity';
 import {connect} from 'react-redux';
-import { getActivity, selectActivity } from '../../../store/redux/activity/activity.action';
-import { NavLink, RouteComponentProps } from 'react-router-dom';
+import { getActivity } from '../../../store/redux/activity/activity.action';
+import { RouteComponentProps } from 'react-router-dom';
 import { IGlobalState } from '../../../store/redux/rootReducer';
 import { LoadingComponent } from '../../common/loading/loading';
 import { ActivityDetailsHeader } from './activity-details-header';
@@ -26,50 +26,26 @@ const ActivityDetails: React.FC<IStateProps & RouteComponentProps<routeParams>> 
   selectedActivity, 
   match,
   isLoadingActivity,
-  getActivity,
-  history
-}) => {
+  getActivity}) => {
 
   useEffect(() => {
       getActivity(match.params.id);
   }, [getActivity, match.params.id])
   
-  { return isLoadingActivity || !selectedActivity ? <LoadingComponent content="Loading Activity" /> 
-  : (
+  { return isLoadingActivity ? <LoadingComponent content="Loading Activity" /> 
+  : selectedActivity ? (
     <Grid>
       <Grid.Column width={10}>
           <ActivityDetailsHeader activity={selectedActivity}/>
-          <ActivityDetailsInfo acitivity={selectedActivity}/>
+          <ActivityDetailsInfo activity={selectedActivity}/>
           <ActivityDetailsChat/>
       </Grid.Column>
       <Grid.Column width={6}>
           <ActivityDetailsSideBar/>
       </Grid.Column>
     </Grid>
-
-      // <Card fluid>
-      //   {/* TODO: NEED TO CHANGE THIS WINDOW LOCATION THING TO SOMETGHING ELSE */}
-      //   <Image src={`${window.location.origin.toString()}/assets/images/categoryImages/${selectedActivity.category}.jpg`} wrapped ui={false} />
-      //   <Card.Content>
-      //     <Card.Header>{selectedActivity.title}</Card.Header>
-      //     <Card.Meta>
-      //       <span className='date'>{selectedActivity.date}</span>
-      //     </Card.Meta>
-      //     <Card.Description>
-      //       {selectedActivity.description}
-      //     </Card.Description>
-      //   </Card.Content>
-      //   <Card.Content extra>
-      //     <Button.Group widths={2}>
-      //         <Button 
-      //           as={NavLink}
-      //           to={`/manage/${selectedActivity.id}`}
-      //           color="blue" 
-      //           content="Edit"/>
-      //         <Button onClick={() => history.push("/activity")} color="grey" content="Cancel"/>
-      //     </Button.Group>
-      //   </Card.Content>
-      // </Card>
+    ) : (
+      <div>Activity Not found</div>
     )
   }
 }

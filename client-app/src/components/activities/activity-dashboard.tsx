@@ -31,9 +31,9 @@ const ActivityDashboard: React.FC<IStateProps> = ({
             <Grid.Column width={10}>
                 <ActivityList activities={activities}/>
             </Grid.Column>
-            <Grid.Column width={6}>
+            { activities && activities.length > 0 && <Grid.Column width={6}>
                 <h1>Activity filters</h1>
-            </Grid.Column>
+            </Grid.Column>}
         </Grid>
       )
     }
