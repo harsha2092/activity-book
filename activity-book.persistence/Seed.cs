@@ -1,13 +1,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using activity_book.domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace activity_book.persistence
 {
     public class Seed
     {
-        public static void SeedData(DataContext context){
+        public async static Task SeedData(DataContext context, UserManager<AppUser> userManager){
+            if(!userManager.Users.Any()){
+                var users = new List<AppUser>
+                {
+                    new AppUser(){
+                        DisplayName = "Harsha",
+                        Email= "harsha@test.com",
+                        UserName="harsha"
+                    },
+                    new AppUser(){
+                        DisplayName = "Anjana",
+                        Email= "anjana@test.com",
+                        UserName="anjana"
+                    },
+                    new AppUser(){
+                        DisplayName = "Ishwarya",
+                        Email= "ishwarya@test.com",
+                        UserName="ishwarya"
+                    },
+                };
+
+                foreach(var user in users) {
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                };
+            }
+
             if(!context.Activities.Any()){
                 var activities = new List<Activity> {
                     new Activity

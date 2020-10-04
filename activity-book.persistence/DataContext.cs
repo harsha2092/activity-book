@@ -1,9 +1,12 @@
 ﻿using activity_book.domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace activity_book.persistence
 {
-    public class DataContext: DbContext
+    // TODO: we are using IdentityDbContext instead of DbContext so our app creates the tables needed for the identity during migrations
+    // Need to understand this and sepatate out to different service if needed
+    public class DataContext: IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions options): base(options) {
 
@@ -15,6 +18,8 @@ namespace activity_book.persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<Value>()
                 .HasData(
                     new Value{Id = 1, Name = "101"},

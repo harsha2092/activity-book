@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "activity-book.persistence",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "activity-book.api", "activity-book.api\activity-book.api.csproj", "{0902C04F-83A4-4F05-A541-A7327EC1D547}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "activity-book.infrastructure", "activity-book.infrastructure\activity-book.infrastructure.csproj", "{443FED01-6CDC-4577-A514-1CA55AB6CB2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{0902C04F-83A4-4F05-A541-A7327EC1D547}.Release|x64.Build.0 = Release|Any CPU
 		{0902C04F-83A4-4F05-A541-A7327EC1D547}.Release|x86.ActiveCfg = Release|Any CPU
 		{0902C04F-83A4-4F05-A541-A7327EC1D547}.Release|x86.Build.0 = Release|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Debug|x64.Build.0 = Debug|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Debug|x86.Build.0 = Debug|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Release|x64.ActiveCfg = Release|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Release|x64.Build.0 = Release|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Release|x86.ActiveCfg = Release|Any CPU
+		{443FED01-6CDC-4577-A514-1CA55AB6CB2A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -7,9 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace activity_book.api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ValuesController : ControllerBase
+
+    public class ValuesController : BaseController
     {
         private readonly DataContext _dataContext;
         public ValuesController(DataContext dataContext)
